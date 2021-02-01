@@ -97,6 +97,7 @@ export const getChainOverview = p => get(localApi + 'getChainOverview', p)
 export const getEarthView = p => get(localApi + 'getMap', p)
 
 // git 仓库 http://47.107.125.101:8889/Qiu_zhao_yun/HashrateChina/
+// git 仓库 https://github.com/17688614025/HashrateChina
 // 消息概览, 内存池消息详情
 export const getMessage = p => get(`message/${p.id}`)
 
