@@ -1,11 +1,10 @@
-<<<<<<< HEAD
-# suan_li
+# HashrateChina
 
 > A Vue.js project
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
@@ -20,8 +19,3 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-=======
-# HashrateChina
-
-算力中国
->>>>>>> 3783723a592f68e16123addbc82772e7b6de37a4
