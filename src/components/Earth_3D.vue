@@ -3,11 +3,16 @@
   <div>
     <div
       id="container"
-      style="width: 100%; height: 509rem; box-sizing: border-box;"/>
+      style="width: 100%; height: 509rem; box-sizing: border-box;"
+    />
     <ul ref="tootips" :class="`tootips ${isShow ? 'show' : 'hide'}`">
       <li v-for="(item, i) in tootips" :key="i">
         <label>{{ item.label }}:</label>
-        <router-link v-if="['矿工', '节点ID'].includes(item.label)" :to="`/address/${item.val}`">{{ item.val }}</router-link>
+        <router-link
+          v-if="['矿工', '节点ID'].includes(item.label)"
+          :to="`/address/${item.val}`"
+        >{{ item.val }}</router-link
+        >
         <span v-else>{{ item.val }}</span>
       </li>
     </ul>
@@ -18,7 +23,8 @@
 import 'echarts/map/js/world.js'
 import 'echarts/map/js/china.js'
 import 'echarts-gl'
-import { getEarthView } from '@/utils/api'
+import { getEarthView, getMap } from '@/utils/api'
+import { subStrCenter } from '@/utils/auth'
 export default {
   data: () => ({
     isShow: false,
@@ -41,7 +47,6 @@ export default {
           shading: 'realistic',
           displacementScale: 0.04,
           environment: require('../assets/imgs/earth_bg.png'),
-          // environment: require('../assets/imgs/starfield.jpg'),
           // shading: 'color',
           realisticMaterial: {
             // roughness: 0.9
@@ -78,8 +83,26 @@ export default {
         myChartView.resize()
       })
       var that = this
-      // var tootips = document.getElementsByClassName('tootips')[0]
       var tootips = that.$refs.tootips
+      // if (!that.isShow) {
+      //   document.onmouseover = function(event) {
+      //     var ev = ev || event
+      //     tootips.style.top = event.offsetY + 'rem'
+      //     tootips.style.left = event.offsetX + 'rem'
+      //     // console.log(event, tootips.style.top, tootips.style.left)
+      //     myChart.on('mouseover', function(params) {
+      //       if (params.value) {
+      //         that.tootips = [
+      //           { label: '节点ID', val: params.value[2] },
+      //           { label: '矿工', val: params.value[3] },
+      //           { label: '位置', val: params.name },
+      //           { label: 'IP', val: params.value[4] }
+      //         ]
+      //       }
+      //       that.isShow = !!params.value
+      //     })
+      //   }
+      // }
       document.onmousedown = function(event) {
         var ev = ev || event
         tootips.style.top = event.offsetY + 'rem'
@@ -143,7 +166,18 @@ export default {
       this.drawEarth(myChart, series)
     },
     // 绘制图表
-    initData(res) {
+    initData(res, loc) {
+      loc = loc ? {
+        peer: 'peer',
+        loc: 'loc',
+        lon: 'lon',
+        lat: 'lat'
+      } : {
+        peer: 'peer_id',
+        loc: 'location_cn',
+        lon: 'longitude',
+        lat: 'latitude'
+      }
       /*
     图中相关城市经纬度,根据你的需求添加数据
     关于国家的经纬度，可以用首都的经纬度或者其他城市的经纬度
@@ -157,41 +191,47 @@ export default {
       if (res) {
         var num = res.length
         for (let i = 0; i < num; i++) {
-          geoCoordMap[res[i].location_cn] = [res[i].longitude, res[i].latitude, res[i].peer_id, res[i].miner, res[i].ip]
+          geoCoordMap[res[i][loc.loc]] = [
+            res[i][loc.lon],
+            res[i][loc.lat],
+            subStrCenter(res[i][loc.peer]),
+            res[i].miner,
+            res[i].ip
+          ]
         }
         var random1 = parseInt(Math.random() * num)
         var random2 = parseInt(Math.random() * num)
         var random3 = parseInt(Math.random() * num)
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 8; i++) {
           CQData.push([
-            { name: res[random1].location_cn },
+            { name: res[random1][loc.loc] },
             {
-              name: res[parseInt(Math.random() * num)].location_cn,
+              name: res[parseInt(Math.random() * num)][loc.loc],
               value: Math.random() * 100
             }
           ])
           GZData.push([
-            { name: res[random2].location_cn },
+            { name: res[random2][loc.loc] },
             {
-              name: res[parseInt(Math.random() * num)].location_cn,
+              name: res[parseInt(Math.random() * num)][loc.loc],
               value: Math.random() * 100
             }
           ])
         }
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 16; i++) {
           NNData.push([
-            { name: res[random3].location_cn },
+            { name: res[random3][loc.loc] },
             {
-              name: res[parseInt(Math.random() * num)].location_cn,
+              name: res[parseInt(Math.random() * num)][loc.loc],
               value: Math.random() * 100
             }
           ])
         }
         Data_Map = [
-          [res[random1].location_cn, CQData],
-          [res[random2].location_cn, GZData],
-          [res[random3].location_cn, NNData]
+          [res[random1][loc.loc], CQData],
+          [res[random2][loc.loc], GZData],
+          [res[random3][loc.loc], NNData]
         ]
       } else {
         geoCoordMap = {
@@ -282,7 +322,8 @@ export default {
               fontSize: 24,
               show: true,
               position: 'right',
-              formatter: '{b}'
+              formatter: ''
+              // formatter: '{b}'
             },
             itemStyle: {
               normal: {
@@ -310,7 +351,8 @@ export default {
                 show: true,
                 position: 'left',
                 fontSize: 18,
-                formatter: '{b}'
+                formatter: ''
+                // formatter: '{b}'
               }
             },
             itemStyle: {
@@ -356,27 +398,38 @@ export default {
       getEarthView({})
         .then(({ data }) => {
           if (data) {
-            cb(data)
+            cb(data.peers, 'loc')
           } else {
             this.initData()
           }
         })
         .catch(err => {
-          // console.log(err)
-          this.initData(err)
+          console.log(err)
+          getMap({})
+            .then(({ data }) => {
+              if (data) {
+                cb(data)
+              } else {
+                this.initData()
+              }
+            })
+            .catch(error => {
+              // console.log(error)
+              this.initData(error)
+            })
         })
     }
   }
 }
 </script>
 <style lang="less" scoped>
-
 .tootips {
   position: absolute;
   border-style: solid;
   white-space: nowrap;
   z-index: 9999999;
-  transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+  transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s,
+    top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
   background-color: rgba(0, 0, 0, 0.6);
   border-width: 0;
   border-color: rgb(51, 51, 51);

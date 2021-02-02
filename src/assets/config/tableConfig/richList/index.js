@@ -9,7 +9,7 @@ export default [
     prop: 'label',
     label: '标签',
     width: '180',
-    linkType: 'tag'
+    tag: 'tag'
   },
   {
     prop: 'balance',

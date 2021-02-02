@@ -1,10 +1,11 @@
+import { position } from '@/utils/auth'
 export default {
   tooltip: {
     trigger: 'item',
     formatter: function(params) {
       return `${params.marker} ${params.name}: ${(params.value / Math.pow(10, 18)).toFixed(4)} FIL (${params.percent}%)</br>`
     },
-    position: [20, 20]
+    position
   },
   legend: { show: false },
   series: [

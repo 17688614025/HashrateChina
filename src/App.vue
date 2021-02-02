@@ -29,6 +29,10 @@ export default {
   float: right !important;
 }
 
+.clear {
+  clear: both;
+}
+
 .text-center {
   text-align: center;
 }

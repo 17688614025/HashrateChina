@@ -1,4 +1,4 @@
-import { toThousands } from '@/utils/auth'
+import { toThousands, position } from '@/utils/auth'
 
 export default {
   title: {},
@@ -16,7 +16,8 @@ export default {
       label: {
         color: '#19D3AF'
       }
-    }
+    },
+    position
   },
   legend: {
     textStyle: {

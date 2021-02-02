@@ -7,16 +7,18 @@
       <router-view />
     </el-main>
     <footer>
-      Footer
+      <FooterComponent/>
     </footer>
   </el-container>
 </template>
 
 <script>
 import HeaderComponent from '@/components/HeaderComponent'
+import FooterComponent from '@/components/FooterComponent'
 export default {
   components: {
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   },
   data: () => ({}),
   computed: {
@@ -54,16 +56,22 @@ export default {
   background-color: #01080f;
 }
 
-header,
-footer {
+header {
   background-color: #031321;
   text-align: center;
   height: 116rem;
   line-height: 116rem;
 }
 
+footer {
+  background-color: #031321;
+  min-height: 276rem;
+}
+
 .el-main {
   padding: 0;
   min-height: 750rem;
+  margin-bottom: 50rem;
+  overflow: hidden;
 }
 </style>

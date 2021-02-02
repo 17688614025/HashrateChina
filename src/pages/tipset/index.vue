@@ -65,7 +65,7 @@ export default {
     // watch就是用来监控数据变化，只有变化了才会调用定时器的变化
     tableData() {
       // 调用定时器
-      // this.timer()
+      this.timer()
     }
   },
   mounted() {
@@ -122,7 +122,7 @@ export default {
     timer() {
       return setTimeout(() => {
         this.getTipsetList()
-      }, 1000)
+      }, 30000)
     }
   }
 }

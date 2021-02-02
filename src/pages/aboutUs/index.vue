@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="20">
     <el-col :span="4">
-      <el-card class="box-card">
+      <el-card class="box-card title">
         <div slot="header" class="clearfix">
           <span>文章列表</span>
         </div>
@@ -68,7 +68,7 @@ export default {
   border: none;
   background-color: #031321;
   color: #ccc;
-  padding: 0 30rem;
+  padding: 0 5rem;
   cursor: pointer;
 }
 

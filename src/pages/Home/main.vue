@@ -114,7 +114,9 @@
                   :class="ruleForm.activeTab === item.val ? 'active-class' : ''"
                   @click="activeTabChange(item.val)"
                 >
-                  {{ item.label }}&nbsp;
+                  <span :class="i? 'powerTab' : 'noBorder powerTab'">
+                    {{ item.label }}
+                  </span>
                 </el-link>
               </span>
             </el-col>
@@ -282,8 +284,8 @@ export default {
       // 账号:NPdNVGzW
       // 密码:YUivZnIl
       return [
-        { val: 'power', label: '有效算力 |' },
-        { val: 'blocks', label: '出块数 |' },
+        { val: 'power', label: '有效算力' },
+        { val: 'blocks', label: '出块数' },
         { val: 'power-growth', label: '算力增速' }
       ]
     },
@@ -302,7 +304,7 @@ export default {
       }
     },
     latestOptions() {
-      return require('@/assets/config/echartsConfig/Home/latest').default
+      return require('@/assets/config/echartsConfig/Home/latestStack').default
     },
     pieOptions() {
       return require('@/assets/config/echartsConfig/Home/pie').default
@@ -316,7 +318,7 @@ export default {
     recentListData() {
       // 调用定时器
       this.latestTime = (parseFloat(this.latestTime) - 1) + '秒'
-      // this.timer()
+      this.timer()
     }
   },
   mounted() {
@@ -330,7 +332,7 @@ export default {
   },
   methods: {
     initData() {
-      // this.intervalTimer()
+      this.intervalTimer()
       this.getPowerBrief()
       this.getBaseFee()
       this.activeTabChange(this.ruleForm.activeTab)
@@ -356,9 +358,6 @@ export default {
           // })
         })
       })
-    },
-    showOverview() {
-      this.isShow = !this.isShow
     },
     // 显示全网概述数据
     showBaseRecentData(res) {
@@ -407,29 +406,31 @@ export default {
     },
     // 显示latest柱状图数据
     showLatestOptions(res) {
-      this.latestOptions.xAxis.data = []
-      this.latestOptions.series[0].data = []
-      const colors = []
+      this.latestOptions.xAxis[0].data = []
+      this.latestOptions.series = []
+      const seriesData = []
       res.map((item, i) => {
-        this.latestOptions.xAxis.data.push(item.height, '')
+        this.latestOptions.xAxis[0].data.push(item.height)
+        seriesData.push(0)
+        const copySeriesData = JSON.parse(JSON.stringify(seriesData))
         if (item.blocks) {
           item.blocks.map((block, n) => {
-            this.latestOptions.series[0].data.push([
-              2 * i,
-              n,
-              block.winCount,
-              block.miner,
-              block.cid,
-              formatDate(item.timestamp)
-            ])
-            colors.push(rgb())
+            copySeriesData[i] = 1
+            this.latestOptions.series.push({
+              name: JSON.stringify({
+                ...block,
+                timestamp: formatDate(item.timestamp)
+              }),
+              type: 'bar',
+              stack: 1,
+              emphasis: {
+                focus: 'series'
+              },
+              data: copySeriesData
+            })
           })
         }
       })
-      // 创造柱状图不同的颜色
-      this.latestOptions.series[0].itemStyle.normal.color = function(params) {
-        return colors[params.dataIndex]
-      }
       this.drawLine(this.latestOptions, 'latest')
     },
     // 显示Pie图数据
@@ -530,9 +531,9 @@ export default {
     },
     // 最新区块
     getRecentList() {
-      const p = { count: 20 }
+      const p = { count: 50 }
       this.action(recentList, p, res => {
-        this.recentListData = res
+        this.recentListData = res.slice(0, 10)
         // 最新区块时间
         this.latestTime = timestamp(this.recentListData[0].timestamp).split(
           '前'
@@ -541,8 +542,7 @@ export default {
           item.height = item.height
           item.time = timestamp(item.timestamp)
         })
-        // 显示树状图数据
-        this.showLatestOptions(this.recentListData)
+        this.showLatestOptions(res)
       })
     },
     // 富豪榜
@@ -645,6 +645,15 @@ export default {
 
     .power-title {
       padding-left: 0 !important;
+
+      .powerTab {
+        padding: 0 10rem;
+        border-left: 1px solid #ccc;
+      }
+
+      .noBorder {
+        border: none;
+      }
     }
 
     .power-table {

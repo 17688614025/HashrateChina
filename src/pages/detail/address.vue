@@ -23,13 +23,13 @@
       <el-row :gutter="20">
         <el-col :sm="24" :lg="12" class="mt-14">
           <div class="item">
-            <el-col :xs="24" :sm="12" :lg="6">
+            <el-col :xs="10" :sm="10" :lg="10">
               <div
                 ref="minerAccount"
                 :style="{ width: '100%', height: '190rem' }"
               />
             </el-col>
-            <el-col :xs="24" :sm="12" :lg="18">
+            <el-col :xs="14" :sm="14" :lg="14">
               <p>账户余额</p>
               <el-row :gutter="10" class="item-title">
                 <el-col :span="24">{{ addressDetail.balance }}</el-col>

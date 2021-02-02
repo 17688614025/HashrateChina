@@ -1,3 +1,4 @@
+import { position } from '@/utils/auth'
 export default {
   title: {
     // text: '某站点用户访问来源',
@@ -8,7 +9,8 @@ export default {
     trigger: 'item',
     formatter: function(params) {
       return `${params.marker} ${params.name}: ${params.value}TiB (${params.percent}%)</br>`
-    }
+    },
+    position
   },
   legend: {
     // orient: 'vertical',

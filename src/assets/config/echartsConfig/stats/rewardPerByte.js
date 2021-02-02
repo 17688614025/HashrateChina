@@ -1,3 +1,4 @@
+import { position } from '@/utils/auth'
 export default {
   title: {},
   tooltip: {
@@ -14,7 +15,8 @@ export default {
       label: {
         color: '#19D3AF'
       }
-    }
+    },
+    position
   },
   legend: {
     textStyle: {

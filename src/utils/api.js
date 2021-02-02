@@ -84,17 +84,17 @@ export const powerBrief = p => get('miner/top-miners/power/brief', { count: 20, 
 // 环境的切换
 var localApi = ''
 if (process.env.NODE_ENV === 'development') {
-  localApi = 'http://123.207.75.117:8098/'
+  localApi = 'http://192.168.0.73:8098/'
 } else if (process.env.NODE_ENV === 'production') {
   localApi = 'http://localhost:8098/'
 }
-export const get_calculate_info = p => post('https://calculator.atpool.com/api/calculator/get_calculate_info', p)
+export const get_calculate_info = p => post('https://explorer.atpool.com/api/calculator/get_calculate_info', p)
 export const getFil = p => post('https://fgas.io/api/v1/getFil', p)
 // export const getChainOverview = p => get('https://filscoutv3api.ipfsunion.cn/network/overview', p)
 export const getChainOverview = p => get(localApi + 'getChainOverview', p)
 // 地球节点
-// export const getEarthView = p => get('https://filscoutv3api.ipfsunion.cn/peer/map_all', { is_chinese: 1, ...p })
-export const getEarthView = p => get(localApi + 'getMap', p)
+export const getEarthView = p => get('https://filscoutv3api.ipfsunion.cn/peer/map_all', { is_chinese: 1, ...p })
+export const getMap = p => get(localApi + 'getMap', p)
 
 // git 仓库 http://47.107.125.101:8889/Qiu_zhao_yun/HashrateChina/
 // git 仓库 https://github.com/17688614025/HashrateChina
