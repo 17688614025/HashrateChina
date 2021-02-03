@@ -11,6 +11,15 @@ npm install
 # serve with hot reload at localhost:8080
 npm run dev
 
+# error delete node_modules and npm cache clean --force
+npm cache clean --force
+
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
 # build for production with minification
 npm run build
 

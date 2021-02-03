@@ -66,7 +66,7 @@ import PhoneTable from '@/components/PhoneTable'
 import tableConfig from '@/assets/config/tableConfig/stats/messageFee'
 import { baseFee, messageFee } from '@/utils/api'
 import { toThousands, formatDate } from '@/utils/auth'
-import { chartMixin } from '@/assets/mixins/chartMixin'
+import { chartMixin } from '@/assets/js/chartMixin'
 export default {
   components: {
     TableComponent,

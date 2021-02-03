@@ -20,6 +20,11 @@ const createLintingRule = () => ({
 })
 
 module.exports = {
+  externals: {
+    echarts: 'echarts',
+    china: 'china',
+    world: 'world'
+  },
   context: path.resolve(__dirname, '../'),
   entry: {
     // app: './src/main.js'

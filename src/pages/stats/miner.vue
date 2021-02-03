@@ -105,7 +105,7 @@ import {
   byteConvert,
   rgb
 } from '@/utils/auth'
-import { chartMixin } from '@/assets/mixins/chartMixin'
+import { chartMixin } from '@/assets/js/chartMixin'
 export default {
   mixins: [chartMixin],
   data: () => ({

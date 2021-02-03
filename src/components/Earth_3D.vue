@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import 'echarts/map/js/world.js'
-import 'echarts/map/js/china.js'
+import echarts from 'echarts'
+// import 'echarts/map/js/world.js'
 import 'echarts-gl'
 import { getEarthView, getMap } from '@/utils/api'
 import { subStrCenter } from '@/utils/auth'
@@ -75,7 +75,7 @@ export default {
         series: series
       }
       // 画图
-      const myChartView = this.$echarts.init(
+      const myChartView = echarts.init(
         document.getElementById('container')
       )
       myChartView.setOption(option, true)
@@ -84,48 +84,38 @@ export default {
       })
       var that = this
       var tootips = that.$refs.tootips
-      // if (!that.isShow) {
-      //   document.onmouseover = function(event) {
-      //     var ev = ev || event
-      //     tootips.style.top = event.offsetY + 'rem'
-      //     tootips.style.left = event.offsetX + 'rem'
-      //     // console.log(event, tootips.style.top, tootips.style.left)
-      //     myChart.on('mouseover', function(params) {
-      //       if (params.value) {
-      //         that.tootips = [
-      //           { label: '节点ID', val: params.value[2] },
-      //           { label: '矿工', val: params.value[3] },
-      //           { label: '位置', val: params.name },
-      //           { label: 'IP', val: params.value[4] }
-      //         ]
-      //       }
-      //       that.isShow = !!params.value
-      //     })
-      //   }
-      // }
-      document.onmousedown = function(event) {
-        var ev = ev || event
-        tootips.style.top = event.offsetY + 'rem'
-        tootips.style.left = event.offsetX + 'rem'
-        // console.log(event, tootips.style.top, tootips.style.left)
-        myChart.on('click', function(params) {
-          if (params.value) {
-            that.tootips = [
-              { label: '节点ID', val: params.value[2] },
-              { label: '矿工', val: params.value[3] },
-              { label: '位置', val: params.name },
-              { label: 'IP', val: params.value[4] }
-            ]
-          }
-          that.isShow = !!params.value
-        })
+      if (!that.isShow) {
+        document.onmouseover = function(event) {
+          var ev = ev || event
+          tootips.style.top = event.offsetY + 'rem'
+          tootips.style.left = event.offsetX + 'rem'
+          // console.log(event, tootips.style.top, tootips.style.left)
+          myChart.on('mouseover', function(params) {
+            if (params.value) {
+              that.tootips = [
+                { label: '节点ID', val: params.value[2] },
+                { label: '矿工', val: params.value[3] },
+                { label: '位置', val: params.name },
+                { label: 'IP', val: params.value[4] }
+              ]
+            }
+            that.isShow = !!params.value
+          })
+        }
       }
+      myChart.on('click', function(params) {
+        if (params.value) {
+          that.$router.push({
+            path: `/address/${params.value[3]}`
+          })
+        }
+      })
     },
     drawEarthBg(dser, series) {
       // 使用世界地图生成地球皮肤
       var canvas = document.createElement('canvas')
 
-      var myChart = this.$echarts.init(canvas, null, {
+      var myChart = echarts.init(canvas, null, {
         width: 4096,
         height: 2048
       })
@@ -208,14 +198,14 @@ export default {
             { name: res[random1][loc.loc] },
             {
               name: res[parseInt(Math.random() * num)][loc.loc],
-              value: Math.random() * 100
+              value: Math.random() * 50 + 30
             }
           ])
           GZData.push([
             { name: res[random2][loc.loc] },
             {
               name: res[parseInt(Math.random() * num)][loc.loc],
-              value: Math.random() * 100
+              value: Math.random() * 50 + 30
             }
           ])
         }
@@ -224,7 +214,7 @@ export default {
             { name: res[random3][loc.loc] },
             {
               name: res[parseInt(Math.random() * num)][loc.loc],
-              value: Math.random() * 100
+              value: Math.random() * 50 + 30
             }
           ])
         }
@@ -428,8 +418,7 @@ export default {
   border-style: solid;
   white-space: nowrap;
   z-index: 9999999;
-  transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s,
-    top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+  transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
   background-color: rgba(0, 0, 0, 0.6);
   border-width: 0;
   border-color: rgb(51, 51, 51);

@@ -53,7 +53,7 @@
 <script>
 import TableComponent from '@/components/TableComponent'
 import PhoneTable from '@/components/PhoneTable'
-import { chartMixin } from '@/assets/mixins/chartMixin'
+import { chartMixin } from '@/assets/js/chartMixin'
 import {
   getMessage
 } from '@/utils/api'

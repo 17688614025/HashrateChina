@@ -237,7 +237,7 @@ import Earth from '@/components/Earth_3D'
 import latestTableConfig from '@/assets/config/tableConfig/Home/latest'
 import richListTableConfig from '@/assets/config/tableConfig/Home/richList'
 import tableData from '@/assets/config/tableConfig/Home/powerData'
-import { chartMixin } from '@/assets/mixins/chartMixin'
+import { chartMixin } from '@/assets/js/chartMixin'
 import { get_calculate_info, getFil, richList, recentList, powerList, powerGrowthList, allBlocksList, baseFee, powerBrief } from '@/utils/api'
 import { toThousands, timestamp, formatDate, byteConvert, rgb } from '@/utils/auth'
 export default {
@@ -431,7 +431,7 @@ export default {
           })
         }
       })
-      this.drawLine(this.latestOptions, 'latest')
+      this.drawLine(this.latestOptions, 'latest', 'clickTrue')
     },
     // 显示Pie图数据
     showPieOptions(res) {
