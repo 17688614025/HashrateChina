@@ -13,6 +13,7 @@
 </template>
 
 <script>
+// import HeaderComponent from '@/components/Header'
 import HeaderComponent from '@/components/HeaderComponent'
 import FooterComponent from '@/components/FooterComponent'
 export default {

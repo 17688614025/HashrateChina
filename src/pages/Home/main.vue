@@ -238,7 +238,7 @@ import latestTableConfig from '@/assets/config/tableConfig/Home/latest'
 import richListTableConfig from '@/assets/config/tableConfig/Home/richList'
 import tableData from '@/assets/config/tableConfig/Home/powerData'
 import { chartMixin } from '@/assets/js/chartMixin'
-import { get_calculate_info, getFil, richList, recentList, powerList, powerGrowthList, allBlocksList, baseFee, powerBrief } from '@/utils/api'
+import { get_overview, get_calculate_info, getFil, richList, recentList, powerList, powerGrowthList, allBlocksList, baseFee, powerBrief } from '@/utils/api'
 import { toThousands, timestamp, formatDate, byteConvert, rgb } from '@/utils/auth'
 export default {
   components: {
@@ -346,46 +346,47 @@ export default {
         this.calculate_info = calculate_infores.data
         this.action(getFil, {}, getChainOverviewres => {
           this.getFilData = getChainOverviewres
-          // this.action(getChainOverview, {}, getChainOverviewres => {
-          // this.overviewData = res.data.statistic
-          // this.overviewData = getChainOverviewres.data
-          this.showBaseRecentData({
-            ...this.recentListData[0],
-            // ...this.overviewData,
-            ...this.getFilData,
-            ...this.calculate_info
+          this.action(get_overview, {}, get_overviewres => {
+            // this.overviewData = res.data.statistic
+            this.overviewData = get_overviewres.data
+            this.showBaseRecentData({
+              ...this.recentListData[0],
+              ...this.overviewData,
+              ...this.getFilData,
+              ...this.calculate_info
+            })
           })
-          // })
         })
       })
     },
     // 显示全网概述数据
     showBaseRecentData(res) {
+      // console.log(res)
       this.baseRecentData = {
         ...res,
-        time: this.latestTime + '前',
-        height: toThousands(res.height),
-        total_quality_power: byteConvert(res.total_quality_power) || '2.001 EiB',
-        active_miners: res.active_miners || '1194',
-        latest_block_reward: (res.latest_block_reward * 1).toFixed(4) || 18.9812 + ' FIL',
-        block_reward: res.block_reward || '18.9812 FIL',
-        total_rewards: toThousands(res.total_rewards, 2) + ' FIL',
-        mining_income_one_day: toThousands(res.mining_income_one_day, 4) + ' FIL/TiB',
-        fil_per_tera: toThousands(res.fil_per_tera, 4) + ' FIL',
-        pledge_collateral: res.pledge_collateral || 0 + ' FIL',
-        total_accounts: toThousands(res.total_accounts),
-        avg_block_time: res.avg_block_time || 0 + ' 秒',
-        avg_blocks_in_tipset_str: res.avg_blocks_in_tipset_str || 0,
-        total_fil: toThousands(res.total_fil || 2000000000) + ' FIL',
-        payment_1T: toThousands(res.payment_1T || 0, 4) + ' FIL',
-        preGas_1T: toThousands(res.preGas_1T || 0, 4) + ' FIL',
-        total_1T: toThousands(res.total_1T || 0, 4) + ' FIL',
-        flow_rate: (res.flow_rate || 0 * 100).toFixed(2) + '%',
-        price: `$ ${res.price || 0}`,
-        total_blocks: toThousands(res.total_blocks) || '1,840,282',
+        time: this.latestTime + '前', // 最新区块时间
+        height: toThousands(res.height), // 区块高度
+        messageCount: res['24_h_message_number'] || toThousands(res.messageCount), // 24h消息数
+        total_quality_power: res['Net_effective_computing_power'] || byteConvert(res.total_quality_power) || '2.001 EiB', // 全网有效算力
+        active_miners: res.active_miners || '0', // 活跃矿工数
+        latest_block_reward: ((res.latest_block_reward * 1).toFixed(4) || 18.9812) + ' FIL', // 最新赢票的奖励
+        block_reward: res['Rewards_per_block'] || res.block_reward || '18.9812 FIL', // 每区块奖励
+        total_rewards: toThousands(res.total_rewards, 2) + ' FIL', // 全网出块奖励
+        fil_per_tera: res['24h_average_mining_income'] || (toThousands(res.fil_per_tera, 4) + ' FIL/TiB'), // 24h平均挖矿收益
+        pledge_collateral: res['FIL_pledge_amount'] || ((res.pledge_collateral || 0) + ' FIL'), // FIL质押量
+        total_accounts: toThousands(res['General_ledger_number'] || res.total_accounts), // 总账户数
+        avg_block_time: res['Mean_block_interval'] || (res.avg_block_time || 0 + ' 秒'), // 平均区块间隔
+        avg_blocks_in_tipset_str: res['Average_number_of_blocks_per_height'] || res.avg_blocks_in_tipset_str || 0, // 平均每高度区块数量
+        total_fil: res['FIL_total_supply'] || (toThousands(res.total_fil || 2000000000) + ' FIL'), // FIL总供给量
+        payment_1T: toThousands(res.payment_1T || 0, 4) + ' FIL', // 单T质押量
+        preGas_1T: toThousands(res.preGas_1T || 0, 4) + ' FIL', // 单T Gas费
+        total_1T: toThousands(res.total_1T || 0, 4) + ' FIL', // 每T扇区的总成本
+        flow_rate: res['Circulating_rate_of_FIL'] || ((res.flow_rate || 0 * 100).toFixed(2) + '%'), // FIL流通率
+        price: res['The_latest_price'] || `$ ${res.price || 0}`, // 最新价格
+        total_blocks: toThousands(res.total_blocks) || '1,840,282', // 全网出块数量
         power_ratio: byteConvert(res.power_ratio) || '706.13' + '/H' // 存储速度
         // avg_pledge: `${res.avg_pledge || 0} FIL`,
-        // increase_power_per_day_str: `${res.increase_power_per_day_str || 0} TiB / 天`
+        // increase_power_per_day_str: `${res.increase_power_per_day_str || 0} TiB / 天` // 全网算力增速
       }
     },
     // 有效算力饼图数据
@@ -531,7 +532,7 @@ export default {
     },
     // 最新区块
     getRecentList() {
-      const p = { count: 50 }
+      const p = { count: 60 }
       this.action(recentList, p, res => {
         this.recentListData = res.slice(0, 10)
         // 最新区块时间
@@ -599,7 +600,7 @@ export default {
         )[0]
         this.showBaseRecentData({
           ...this.recentListData[0],
-          // ...this.overviewData,
+          ...this.overviewData,
           ...this.getFilData,
           ...this.calculate_info
         })

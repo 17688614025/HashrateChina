@@ -1,4 +1,5 @@
 import echarts from 'echarts'
+var myChart = ''
 export const chartMixin = {
   data: () => ({
     resizefun: null,
@@ -13,6 +14,7 @@ export const chartMixin = {
   beforeDestroy() {
     window.removeEventListener('resize', this.resizefun)
     this.resizefun = null
+    myChart && myChart.clear()
   },
   methods: {
     initData() {
@@ -20,19 +22,22 @@ export const chartMixin = {
     },
     // 画图
     drawLine(options, ref, click) {
-      if (this.$refs[ref]) {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(this.$refs[ref])
-        // 绘制图表
-        myChart.setOption(options)
-        // 实现自适应部分
-        this.resizefun = () => {
-          echarts.init(this.$refs[ref]).resize()
-        }
-        window.addEventListener('resize', this.resizefun)
+      const that = this
+      // 基于准备好的dom，初始化echarts实例
+      if (that.$refs[ref]) {
+        myChart = echarts.init(that.$refs[ref])
       }
+
+      // 绘制图表
+      myChart.setOption(options)
+      // 实现自适应部分
+      that.resizefun = () => {
+        if (that.$refs[ref]) {
+          echarts.init(that.$refs[ref]).resize()
+        }
+      }
+      window.addEventListener('resize', that.resizefun)
       if (click) {
-        const that = this
         myChart.on('click', function(params) {
           const obj = JSON.parse(params.seriesName)
           if (obj.miner) {
@@ -44,12 +49,12 @@ export const chartMixin = {
       }
     },
     /**
-         * 请求处理
-         * @param {Function} f api请求接口函数
-         * @param {Object} p 请求参数
-         * @param {Function} cb 返回数据的回调函数
-         * @param {String} tag loading标签
-         */
+     * 请求处理
+     * @param {Function} f api请求接口函数
+     * @param {Object} p 请求参数
+     * @param {Function} cb 返回数据的回调函数
+     * @param {String} tag loading标签
+     */
     action(f, p, cb, tag) {
       this.loading[tag] = true
       f(p).then(res => {

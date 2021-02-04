@@ -10,18 +10,19 @@
   >
     <el-menu-item
       class="logo"
+      index="/"
     >
-      <router-link to="/">
-        <img
-          class="logoimg"
-          src="../assets/imgs/suan_li_logo.png"
-          alt="logo"
-        >
-        <div class="fr logo-text">
-          <p class="text1">算 力 中 国</p>
-          <p class="text2">Hashrate China</p>
-        </div>
-      </router-link>
+      <!-- <router-link to="/"> -->
+      <img
+        class="logoimg"
+        src="../assets/imgs/suan_li_logo.png"
+        alt="logo"
+      >
+      <div class="fr logo-text">
+        <p class="text1">算 力 中 国</p>
+        <p class="text2">Hashrate China</p>
+      </div>
+      <!-- </router-link> -->
     </el-menu-item>
     <el-menu-item
       v-for="(item, key) in leftNavItems"
@@ -34,6 +35,7 @@
     <el-submenu
       v-if="Object.keys(rightNavItems).length"
       class="fr right-item"
+      index="dropdown"
     >
       <template slot="title">
         <i class="el-icon-s-unfold" style="font-size: 28rem; color: #fff;" />
@@ -46,7 +48,7 @@
         {{ item.name }}
       </el-menu-item>
     </el-submenu>
-    <el-menu-item class="fr">
+    <el-menu-item :index="$route.path" class="fr">
       <span v-if="!Object.keys(rightNavItems).length" class="mainnet">
         <span>当前网络:</span>
         <span>Mainnet</span>
@@ -143,11 +145,25 @@ export default {
 <style lang="less" scoped>
 .el-menu.el-menu--horizontal {
   border-bottom: none;
+
+  .el-menu-item {
+    height: 60rem;
+    line-height: 60rem;
+    border-bottom: none;
+  }
 }
 
-.el-menu--horizontal > .el-menu-item {
+/deep/.el-submenu .el-submenu__title {
   height: 60rem;
   line-height: 60rem;
+  padding: 0;
+  cursor: pointer;
+  border-bottom: none;
+}
+
+/deep/.el-submenu.is-active .el-submenu__title {
+  border-bottom: none;
+  color: #303133;
 }
 
 .el-menu {
@@ -188,13 +204,6 @@ export default {
     font-size: 14rem;
     color: #5bfdff;
     margin: 0;
-  }
-
-  /deep/.el-submenu__title {
-    height: 60rem;
-    line-height: 60rem;
-    padding: 0;
-    cursor: pointer;
   }
 }
 </style>

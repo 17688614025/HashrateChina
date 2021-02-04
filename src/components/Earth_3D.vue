@@ -41,7 +41,6 @@ export default {
         backgroundColor: '#031321',
         globe: {
           baseTexture: myChart,
-          // baseTexture: require('../assets/imgs/world.jpg'),
           top: 'middle',
           left: 'center',
           shading: 'realistic',
@@ -75,9 +74,7 @@ export default {
         series: series
       }
       // 画图
-      const myChartView = echarts.init(
-        document.getElementById('container')
-      )
+      const myChartView = echarts.init(document.getElementById('container'))
       myChartView.setOption(option, true)
       window.addEventListener('resize', function() {
         myChartView.resize()
@@ -87,8 +84,10 @@ export default {
       if (!that.isShow) {
         document.onmouseover = function(event) {
           var ev = ev || event
-          tootips.style.top = event.offsetY + 'rem'
-          tootips.style.left = event.offsetX + 'rem'
+          if (tootips) {
+            tootips.style.top = event.offsetY + 'rem'
+            tootips.style.left = event.offsetX + 'rem'
+          }
           // console.log(event, tootips.style.top, tootips.style.left)
           myChart.on('mouseover', function(params) {
             if (params.value) {
@@ -157,17 +156,19 @@ export default {
     },
     // 绘制图表
     initData(res, loc) {
-      loc = loc ? {
-        peer: 'peer',
-        loc: 'loc',
-        lon: 'lon',
-        lat: 'lat'
-      } : {
-        peer: 'peer_id',
-        loc: 'location_cn',
-        lon: 'longitude',
-        lat: 'latitude'
-      }
+      loc = loc
+        ? {
+          peer: 'peer',
+          loc: 'loc',
+          lon: 'lon',
+          lat: 'lat'
+        }
+        : {
+          peer: 'peer_id',
+          loc: 'location_cn',
+          lon: 'longitude',
+          lat: 'latitude'
+        }
       /*
     图中相关城市经纬度,根据你的需求添加数据
     关于国家的经纬度，可以用首都的经纬度或者其他城市的经纬度
@@ -176,6 +177,9 @@ export default {
       var CQData = []
       var GZData = []
       var NNData = []
+      // var NSData = []
+      // var NCData = []
+      // var NDData = []
       var Data_Map = []
       // console.log(res)
       if (res) {
@@ -189,39 +193,44 @@ export default {
             res[i].ip
           ]
         }
-        var random1 = parseInt(Math.random() * num)
-        var random2 = parseInt(Math.random() * num)
-        var random3 = parseInt(Math.random() * num)
 
-        for (let i = 0; i < 8; i++) {
-          CQData.push([
-            { name: res[random1][loc.loc] },
-            {
-              name: res[parseInt(Math.random() * num)][loc.loc],
-              value: Math.random() * 50 + 30
-            }
-          ])
-          GZData.push([
-            { name: res[random2][loc.loc] },
-            {
-              name: res[parseInt(Math.random() * num)][loc.loc],
-              value: Math.random() * 50 + 30
-            }
-          ])
+        const randomArr = []
+        for (let i = 0; i < 6; i++) {
+          randomArr.push(parseInt(Math.random() * num))
         }
-        for (let i = 0; i < 16; i++) {
-          NNData.push([
-            { name: res[random3][loc.loc] },
-            {
-              name: res[parseInt(Math.random() * num)][loc.loc],
-              value: Math.random() * 50 + 30
-            }
-          ])
+
+        const createData = function(datas, n) {
+          for (let i = 0; i < n; i++) {
+            datas.map(item => {
+              item.name.push([
+                { name: res[item.random][loc.loc] },
+                {
+                  name: res[parseInt(Math.random() * num)][loc.loc],
+                  value: Math.random() * 50 + 30
+                }
+              ])
+            })
+          }
         }
+        createData([
+          { name: CQData, random: randomArr[1] },
+          { name: GZData, random: randomArr[2] }
+        ], 2)
+        createData([
+          { name: NNData, random: randomArr[3] }
+          // { name: NSData, random: randomArr[4] }
+        ], 5)
+        // createData([
+        //   { name: NCData, random: randomArr[5] },
+        //   { name: NDData, random: randomArr[6] }
+        // ], 8)
         Data_Map = [
-          [res[random1][loc.loc], CQData],
-          [res[random2][loc.loc], GZData],
-          [res[random3][loc.loc], NNData]
+          [res[randomArr[1]][loc.loc], CQData],
+          [res[randomArr[2]][loc.loc], GZData],
+          [res[randomArr[3]][loc.loc], NNData]
+          // [res[randomArr[4]][loc.loc], NSData],
+          // [res[randomArr[5]][loc.loc], NCData],
+          // [res[randomArr[6]][loc.loc], NDData]
         ]
       } else {
         geoCoordMap = {

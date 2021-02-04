@@ -90,6 +90,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 export const get_calculate_info = p => post('https://explorer.atpool.com/api/calculator/get_calculate_info', p)
 export const getFil = p => post('https://fgas.io/api/v1/getFil', p)
+export const get_overview = p => post('https://explorer.atpool.com/api/explorer/get_overview', p)
 // export const getChainOverview = p => get('https://filscoutv3api.ipfsunion.cn/network/overview', p)
 export const getChainOverview = p => get(localApi + 'getChainOverview', p)
 // 地球节点
