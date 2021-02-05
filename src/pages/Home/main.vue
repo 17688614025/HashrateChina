@@ -49,7 +49,7 @@
           </div>
           <el-row :gutter="20">
             <el-col :span="24">
-              <div ref="latest" :style="{ width: '100%', height: '400rem' }" />
+              <div ref="latest" :style="{ width: '100%', height: '350rem' }" />
             </el-col>
           </el-row>
         </el-card>
@@ -618,7 +618,7 @@ export default {
   .gaishu {
     .gaishu-item {
       text-align: center;
-      min-height: 120rem;
+      min-height: 80rem;
       background: #041626;
       border: 1px solid #062437;
       border-radius: 10px;
@@ -630,10 +630,10 @@ export default {
       }
 
       p {
-        font-size: 28rem;
+        font-size: 20rem;
         font-weight: bold;
         color: #5bfdff;
-        margin: 25rem 0 10rem;
+        margin: 15rem 0 5rem;
       }
 
       .item-label {

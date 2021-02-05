@@ -3,7 +3,7 @@
   <div>
     <div
       id="container"
-      style="width: 100%; height: 509rem; box-sizing: border-box;"
+      style="width: 100%; height: 462rem; box-sizing: border-box;"
     />
     <ul ref="tootips" :class="`tootips ${isShow ? 'show' : 'hide'}`">
       <li v-for="(item, i) in tootips" :key="i">
@@ -38,7 +38,7 @@ export default {
     // 3D地球
     drawEarth(myChart, series) {
       var option = {
-        backgroundColor: '#031321',
+        // backgroundColor: '#031321',
         globe: {
           baseTexture: myChart,
           top: 'middle',
@@ -113,13 +113,14 @@ export default {
     drawEarthBg(dser, series) {
       // 使用世界地图生成地球皮肤
       var canvas = document.createElement('canvas')
-
       var myChart = echarts.init(canvas, null, {
         width: 4096,
         height: 2048
       })
+
       myChart.setOption({
         backgroundColor: 'rgba(3,28,72,0.3)',
+        // backgroundColor: 'transparent',
         title: {
           show: true
         },
@@ -139,10 +140,12 @@ export default {
           itemStyle: {
             borderColor: '#000d2d',
             normal: {
+              // areaColor: 'rgba(36,85,173, 0.5)',
               areaColor: '#2455ad',
               borderColor: '#000c2d'
             },
             emphasis: {
+              // areaColor: 'rgba(53,124,248,0.5)'
               areaColor: '#357cf8'
             }
           },
@@ -177,7 +180,7 @@ export default {
       var CQData = []
       var GZData = []
       var NNData = []
-      // var NSData = []
+      var NSData = []
       // var NCData = []
       // var NDData = []
       var Data_Map = []
@@ -217,8 +220,8 @@ export default {
           { name: GZData, random: randomArr[2] }
         ], 2)
         createData([
-          { name: NNData, random: randomArr[3] }
-          // { name: NSData, random: randomArr[4] }
+          { name: NNData, random: randomArr[3] },
+          { name: NSData, random: randomArr[4] }
         ], 5)
         // createData([
         //   { name: NCData, random: randomArr[5] },
@@ -227,8 +230,8 @@ export default {
         Data_Map = [
           [res[randomArr[1]][loc.loc], CQData],
           [res[randomArr[2]][loc.loc], GZData],
-          [res[randomArr[3]][loc.loc], NNData]
-          // [res[randomArr[4]][loc.loc], NSData],
+          [res[randomArr[3]][loc.loc], NNData],
+          [res[randomArr[4]][loc.loc], NSData]
           // [res[randomArr[5]][loc.loc], NCData],
           // [res[randomArr[6]][loc.loc], NDData]
         ]
@@ -383,9 +386,9 @@ export default {
           },
           lineStyle: {
             // 航线的视图效果
-            color: '#9ae5fc',
             width: 1,
-            opacity: 0.6
+            color: '#fff',
+            opacity: 0.5
           },
           data: convertData(item[1]) // 特效的起始、终点位置，一个二维数组，相当于coords: convertData(item[1])
         })
@@ -422,6 +425,11 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+#container {
+  background: url('../assets/imgs/earth_bg.png') no-repeat;
+  background-position: left;
+}
+
 .tootips {
   position: absolute;
   border-style: solid;

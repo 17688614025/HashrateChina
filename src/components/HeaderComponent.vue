@@ -12,23 +12,17 @@
       class="logo"
       index="/"
     >
-      <!-- <router-link to="/"> -->
       <img
         class="logoimg"
-        src="../assets/imgs/suan_li_logo.png"
+        src="../assets/imgs/logo.png"
         alt="logo"
       >
-      <div class="fr logo-text">
-        <p class="text1">算 力 中 国</p>
-        <p class="text2">Hashrate China</p>
-      </div>
-      <!-- </router-link> -->
     </el-menu-item>
     <el-menu-item
       v-for="(item, key) in leftNavItems"
       :key="key"
       :index="item.indexPath"
-      :class="!key && 'ml-005'"
+      :class="'underline ' + (!key && 'ml-005')"
     >
       {{ item.name }}
     </el-menu-item>
@@ -146,16 +140,37 @@ export default {
 .el-menu.el-menu--horizontal {
   border-bottom: none;
 
+  .menu-item,
   .el-menu-item {
-    height: 60rem;
-    line-height: 60rem;
-    border-bottom: none;
+    height: 40rem;
+    line-height: 40rem;
+    border: none;
+  }
+
+  .underline::after {
+    display: block;
+    content: "";
+    height: 2px;
+    width: 0%;
+    background-color: #5bfdff;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    right: 50%;
+    transition: all 0.5s;
+  }
+
+  .underline:hover::after,
+  .underline:focus::after {
+    left: 25%;
+    right: 25%;
+    width: 50%;
   }
 }
 
 /deep/.el-submenu .el-submenu__title {
-  height: 60rem;
-  line-height: 60rem;
+  height: 40rem;
+  // line-height: 40rem;
   padding: 0;
   cursor: pointer;
   border-bottom: none;
@@ -168,33 +183,18 @@ export default {
 
 .el-menu {
   width: 96%;
-  margin: 28rem auto;
+  margin: 20rem auto;
 
   .logo {
-    .logo-text {
-      height: 60rem;
-      margin: -4rem 15rem 0;
-
-      p {
-        margin: 0;
-        height: 20rem;
-        text-align: left;
-
-        &.text1 {
-          font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-          font-size: 18rem;
-        }
-
-        &.text2 {
-          font-size: 12rem;
-        }
-      }
+    .logoimg {
+      height: 30rem;
     }
   }
 
   .mainnet {
     font-size: 14rem;
     margin-right: 25rem;
+    color: #ccc;
   }
 
   .el-dropdown-link {

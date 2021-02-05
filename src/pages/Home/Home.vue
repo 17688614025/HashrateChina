@@ -13,7 +13,6 @@
 </template>
 
 <script>
-// import HeaderComponent from '@/components/Header'
 import HeaderComponent from '@/components/HeaderComponent'
 import FooterComponent from '@/components/FooterComponent'
 export default {
@@ -60,19 +59,19 @@ export default {
 header {
   background-color: #031321;
   text-align: center;
-  height: 116rem;
-  line-height: 116rem;
+  height: 80rem;
+  line-height: 80rem;
 }
 
 footer {
   background-color: #031321;
-  min-height: 276rem;
+  min-height: 116rem;
 }
 
 .el-main {
   padding: 0;
   min-height: 750rem;
-  margin-bottom: 50rem;
+  margin-bottom: 20rem;
   overflow: hidden;
 }
 </style>
