@@ -1,6 +1,6 @@
 import * as echarts from 'echarts'
 import 'echarts-gl'
-import earth from './earth4'
+import option from './option1'
 var chartDom = document.getElementById('earth')
 var myChart = echarts.init(chartDom)
 
@@ -20,13 +20,14 @@ context.lineWidth = 0.5
 context.strokeStyle = config.color
 context.fillStyle = config.color
 context.shadowColor = config.color
-var ROOT_PATH = 'https://cdn.jsdelivr.net/npm'
+// 环境的切换
+var ROOT_PATH = process.env.NODE_ENV === 'production' ? './static/' : '../../../static/'
 $.when(
-  $.getScript(ROOT_PATH + '/d3-contour@2.0.0/dist/d3-contour.js'),
-  $.getScript(ROOT_PATH + '/d3-geo@2.0.1/dist/d3-geo.js'),
-  $.getScript(ROOT_PATH + '/d3-timer@2.0.0/dist/d3-timer.js')
-).done(function() {
-  image('../../../static/8.png').then(function(image) {
+  $.getScript(`${ROOT_PATH}d3-contour.js`),
+  $.getScript(`${ROOT_PATH}d3_geo.js`),
+  $.getScript(`${ROOT_PATH}d3_timer.js`)
+).done(res => {
+  image(`${ROOT_PATH}8.png`).then(image => {
     var m = image.height
     var n = image.width
     var values = new Array(n * m)
@@ -116,6 +117,6 @@ $.when(
       img.dirty()
     }
 
-    myChart.setOption(earth)
+    myChart && myChart.setOption(option)
   }
 })

@@ -99,6 +99,9 @@ export const getMap = p => get(localApi + 'getMap', p)
 
 // git 仓库 http://47.107.125.101:8889/Qiu_zhao_yun/HashrateChina/
 // git 仓库 https://github.com/17688614025/HashrateChina
+// 1 git remote rm origin // 移除本地关联
+// 2 git remote add origin https://github.com/17688614025/HashrateChina // 添加线上仓库
+// 3 git push -u origin master // 注意：更改后，第一次上传需要指定 origin
 // 消息概览, 内存池消息详情
 export const getMessage = p => get(`message/${p.id}`)
 

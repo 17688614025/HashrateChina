@@ -364,7 +364,7 @@ export default {
     recentListData() {
       // 调用定时器
       this.latestTime = parseFloat(this.latestTime) - 1 + '秒'
-      this.timer()
+      // this.timer()
     }
   },
   mounted() { },
@@ -376,7 +376,7 @@ export default {
   },
   methods: {
     initData() {
-      this.intervalTimer()
+      // this.intervalTimer()
       this.getPowerBrief()
       this.getBaseFee()
       this.activeTabChange(this.ruleForm.activeTab)
