@@ -2,24 +2,33 @@
   <div class="main">
     <!-- 第一部分 地球 全网概览 -->
     <el-row :gutter="20">
-      <el-col :sm="24" :lg="12" class="mt-14">
-        <Earth/>
+      <el-col :sm="24"
+              :lg="12"
+              class="mt-14">
+        <Earth />
       </el-col>
-      <el-col :sm="24" :lg="12" class="mt-14">
+      <el-col :sm="24"
+              :lg="12"
+              class="mt-14">
         <el-card class="box-card gaishu">
           <div slot="header">
             <span class="card-title">
-              <i class="fa fa-globe" aria-hidden="true" />
+              <i class="fa fa-globe"
+                 aria-hidden="true" />
               全球概述
             </span>
           </div>
-          <el-row :gutter="20" class="innerbox">
-            <el-col v-for="(o, i) in baseRecentConfig" :span="8" :key="i">
+          <el-row :gutter="20"
+                  class="innerbox">
+            <el-col v-for="(o, i) in baseRecentConfig"
+                    :span="8"
+                    :key="i">
               <div class="gaishu-item mb-18">
                 <p>{{ baseRecentData[o.prop] }}</p>
                 <div class="item-label">
                   <span>{{ o.label }}</span>
-                  <el-tooltip v-if="o.needTips" placement="bottom">
+                  <el-tooltip v-if="o.needTips"
+                              placement="bottom">
                     <div slot="content">{{ o.needTips }}</div>
                     <i class="el-icon-info" />
                   </el-tooltip>
@@ -31,12 +40,14 @@
       </el-col>
     </el-row>
     <!-- 第二部分 柱状图 -->
-    <el-row :gutter="20" class="mt-14">
+    <el-row :gutter="20"
+            class="mt-14">
       <el-col :span="24">
         <el-card class="box-card">
           <div slot="header">
             <span class="card-title">
-              <img src="@/assets/imgs/recent.png" alt="recent">
+              <img src="@/assets/imgs/recent.png"
+                   alt="recent">
               近半小时出块
             </span>
             <span class="show-time">
@@ -49,7 +60,8 @@
           </div>
           <el-row :gutter="20">
             <el-col :span="24">
-              <div ref="latest" :style="{ width: '100%', height: '350rem' }" />
+              <div ref="latest"
+                   :style="{ width: '100%', height: '350rem' }" />
             </el-col>
           </el-row>
         </el-card>
@@ -57,11 +69,14 @@
     </el-row>
     <!-- 第三部分 饼图 折线图 -->
     <el-row :gutter="20">
-      <el-col :sm="24" :lg="12" class="mt-14">
+      <el-col :sm="24"
+              :lg="12"
+              class="mt-14">
         <el-card class="box-card">
           <div slot="header">
             <span class="card-title">
-              <i class="el-icon-pie-chart" aria-hidden="true" />
+              <i class="el-icon-pie-chart"
+                 aria-hidden="true" />
               有效算力
             </span>
             <router-link to="/stats/miner">
@@ -70,16 +85,20 @@
           </div>
           <el-row :gutter="20">
             <el-col :span="24">
-              <div ref="pie" :style="{ width: '100%', height: '400rem' }" />
+              <div ref="pie"
+                   :style="{ width: '100%', height: '400rem' }" />
             </el-col>
           </el-row>
         </el-card>
       </el-col>
-      <el-col :sm="24" :lg="12" class="mt-14">
+      <el-col :sm="24"
+              :lg="12"
+              class="mt-14">
         <el-card class="box-card">
           <div slot="header">
             <span class="card-title">
-              <i class="fa fa-line-chart" aria-hidden="true" />
+              <i class="fa fa-line-chart"
+                 aria-hidden="true" />
               24gas走势
             </span>
             <router-link to="/stats/gas">
@@ -88,81 +107,79 @@
           </div>
           <el-row :gutter="20">
             <el-col :span="24">
-              <div ref="baseFee" :style="{ width: '100%', height: '400rem' }" />
+              <div ref="baseFee"
+                   :style="{ width: '100%', height: '400rem' }" />
             </el-col>
           </el-row>
         </el-card>
       </el-col>
     </el-row>
     <!-- 第四部分 排行榜 -->
-    <el-row :gutter="20" class="mt-14">
+    <el-row :gutter="20"
+            class="mt-14">
       <el-col :span="24">
         <el-card class="box-card power">
-          <div slot="header" class="clearfix">
+          <div slot="header"
+               class="clearfix">
             <span class="card-title">
-              <img src="@/assets/imgs/dig.png" alt="dig" >
+              <img src="@/assets/imgs/dig.png"
+                   alt="dig">
               挖矿排行榜
             </span>
           </div>
-          <div slot="header" class="clearfix mt-14 power">
-            <el-col :xs="24" :md="12" :lg="12" class="power-title">
+          <div slot="header"
+               class="clearfix mt-14 power">
+            <el-col :xs="24"
+                    :md="12"
+                    :lg="12"
+                    class="power-title">
               <span class="show-more fl">
-                <el-link
-                  v-for="(item, i) in powerLink"
-                  :underline="false"
-                  :key="i"
-                  :class="ruleForm.activeTab === item.val ? 'active-class' : ''"
-                  @click="activeTabChange(item.val)"
-                >
-                  <span :class="i? 'powerTab' : 'noBorder powerTab'">
+                <el-link v-for="(item, i) in powerLink"
+                         :underline="false"
+                         :key="i"
+                         :class="ruleForm.activeTab === item.val ? 'active-class' : ''"
+                         @click="activeTabChange(item.val)">
+                  <span :class="i ? 'powerTab' : 'noBorder powerTab'">
                     {{ item.label }}
                   </span>
                 </el-link>
               </span>
             </el-col>
-            <el-col :span="12" class="isWebShow">
-              <div
-                v-show="ruleForm.activeTab !== 'power'"
-                class="fr"
-                style="margin-left: 20rem;"
-              >
-                <el-radio-group
-                  v-model="ruleForm.duration"
-                  size="mini"
-                  @change="durationChange"
-                >
+            <el-col :span="12"
+                    class="isWebShow">
+              <div v-show="ruleForm.activeTab !== 'power'"
+                   class="fr"
+                   style="margin-left: 20rem;">
+                <el-radio-group v-model="ruleForm.duration"
+                                size="mini"
+                                @change="durationChange">
                   <el-radio-button label="24h">24时</el-radio-button>
                   <el-radio-button label="7d">7天</el-radio-button>
                   <el-radio-button label="30d">30天</el-radio-button>
                   <el-radio-button label="1y">1年</el-radio-button>
                 </el-radio-group>
               </div>
-              <el-select
-                v-model="ruleForm.continent"
-                size="mini"
-                class="fr"
-                placeholder="请选择"
-                @change="continentChange"
-              >
-                <el-option
-                  v-for="(item, i) in options"
-                  :key="i"
-                  :label="item.label"
-                  :value="item.value"
-                />
+              <el-select v-model="ruleForm.continent"
+                         size="mini"
+                         class="fr"
+                         placeholder="请选择"
+                         @change="continentChange">
+                <el-option v-for="(item, i) in options"
+                           :key="i"
+                           :label="item.label"
+                           :value="item.value" />
               </el-select>
             </el-col>
           </div>
-          <el-row :gutter="20" class="innerbox power-table">
+          <el-row :gutter="20"
+                  class="innerbox power-table">
             <el-col :span="24">
-              <TableComponent
-                :loading="loading.power"
-                :size="'mini'"
-                :max-h="860"
-                :sort="true"
-                :table-data="tableData"
-                :table-config="tableConfig"
-              />
+              <TableComponent :loading="loading.power"
+                              :size="'mini'"
+                              :max-h="860"
+                              :sort="true"
+                              :table-data="tableData"
+                              :table-config="tableConfig" />
               <!-- class="isWebShow" -->
               <!-- <PhoneTable :bg="'bg'" :table-data="tableData" :table-config="tableConfig" class="isAppShow"/> -->
               <div class="center">
@@ -177,35 +194,41 @@
     </el-row>
     <!-- 第五部分 最新区块 富豪榜 -->
     <el-row :gutter="20">
-      <el-col :sm="24" :lg="12" class="mt-14">
+      <el-col :sm="24"
+              :lg="12"
+              class="mt-14">
         <el-card class="box-card latest">
-          <div slot="header" class="clearfix">
+          <div slot="header"
+               class="clearfix">
             <span class="card-title">
-              <img src="@/assets/imgs/tipset.png" alt="tipset" >
+              <img src="@/assets/imgs/tipset.png"
+                   alt="tipset">
               最新区块
             </span>
             <router-link to="/tipset">
               <span class="show-more">更多</span>
             </router-link>
           </div>
-          <el-row :gutter="20" class="innerbox">
+          <el-row :gutter="20"
+                  class="innerbox">
             <el-col :span="24">
-              <TableComponent
-                :size="'mini'"
-                :table-data="recentListData"
-                :table-config="latestTableConfig"
-              />
+              <TableComponent :size="'mini'"
+                              :table-data="recentListData"
+                              :table-config="latestTableConfig" />
               <!-- class="isWebShow" -->
               <!-- <PhoneTable :bg="'bg'" :table-data="recentListData" :table-config="latestTableConfig" class="isAppShow"/> -->
             </el-col>
           </el-row>
         </el-card>
       </el-col>
-      <el-col :sm="24" :lg="12" class="mt-14">
+      <el-col :sm="24"
+              :lg="12"
+              class="mt-14">
         <el-card class="box-card">
           <div slot="header">
             <span class="card-title">
-              <img src="@/assets/imgs/rich.png" alt="rich" >富豪榜
+              <img src="@/assets/imgs/rich.png"
+                   alt="rich">富豪榜
             </span>
             <router-link to="/richList">
               <span class="show-more">更多</span>
@@ -213,13 +236,11 @@
           </div>
           <el-row :gutter="20">
             <el-col :span="24">
-              <TableComponent
-                :size="'mini'"
-                :loading="loading.rich"
-                :sort="true"
-                :table-data="richListData"
-                :table-config="richListTableConfig"
-              />
+              <TableComponent :size="'mini'"
+                              :loading="loading.rich"
+                              :sort="true"
+                              :table-data="richListData"
+                              :table-config="richListTableConfig" />
               <!-- class="isWebShow" -->
               <!-- <PhoneTable :bg="'bg'" :table-data="richListData" :table-config="richListTableConfig" class="isAppShow"/> -->
             </el-col>
@@ -233,13 +254,31 @@
 <script>
 import TableComponent from '@/components/TableComponent'
 import PhoneTable from '@/components/PhoneTable'
-import Earth from '@/components/Earth_3D'
+import Earth from '@/components/echarts_3D'
+// import Earth from '@/components/Earth_3D'
 import latestTableConfig from '@/assets/config/tableConfig/Home/latest'
 import richListTableConfig from '@/assets/config/tableConfig/Home/richList'
 import tableData from '@/assets/config/tableConfig/Home/powerData'
 import { chartMixin } from '@/assets/js/chartMixin'
-import { get_overview, get_calculate_info, getFil, richList, recentList, powerList, powerGrowthList, allBlocksList, baseFee, powerBrief } from '@/utils/api'
-import { toThousands, timestamp, formatDate, byteConvert, rgb } from '@/utils/auth'
+import {
+  get_overview,
+  get_calculate_info,
+  getFil,
+  richList,
+  recentList,
+  powerList,
+  powerGrowthList,
+  allBlocksList,
+  baseFee,
+  powerBrief
+} from '@/utils/api'
+import {
+  toThousands,
+  timestamp,
+  formatDate,
+  byteConvert,
+  rgb
+} from '@/utils/auth'
 export default {
   components: {
     TableComponent,
@@ -272,7 +311,15 @@ export default {
   computed: {
     options() {
       const arr = []
-      const _options = ['全球', '亚洲', '欧洲', '非洲', '北美洲', '南美洲', '大洋洲']
+      const _options = [
+        '全球',
+        '亚洲',
+        '欧洲',
+        '非洲',
+        '北美洲',
+        '南美洲',
+        '大洋洲'
+      ]
       const _vals = [null, 'AS', 'EU', 'AF', 'NA', 'SA', 'OC']
       _options.map((item, i) => {
         arr.push({ value: _vals[i], label: item })
@@ -293,15 +340,14 @@ export default {
       get() {
         return require('@/assets/config/formConfig/Home/baseRecent').default
       },
-      set() {
-      }
+      set() { }
     },
     tableConfig: {
       get() {
-        return require('@/assets/config/tableConfig/Home/' + this.ruleForm.activeTab).default
+        return require('@/assets/config/tableConfig/Home/' +
+          this.ruleForm.activeTab).default
       },
-      set() {
-      }
+      set() { }
     },
     latestOptions() {
       return require('@/assets/config/echartsConfig/Home/latestStack').default
@@ -317,13 +363,11 @@ export default {
     // watch就是用来监控数据变化，只有变化了才会调用定时器的变化
     recentListData() {
       // 调用定时器
-      this.latestTime = (parseFloat(this.latestTime) - 1) + '秒'
+      this.latestTime = parseFloat(this.latestTime) - 1 + '秒'
       this.timer()
     }
   },
-  mounted() {
-
-  },
+  mounted() { },
   beforeRouteLeave(to, from, next) {
     // 销毁监听
     clearTimeout(this.timer)
@@ -351,9 +395,9 @@ export default {
             this.overviewData = get_overviewres.data
             this.showBaseRecentData({
               ...this.recentListData[0],
-              ...this.overviewData,
               ...this.getFilData,
-              ...this.calculate_info
+              ...this.calculate_info,
+              ...this.overviewData
             })
           })
         })
@@ -366,22 +410,41 @@ export default {
         ...res,
         time: this.latestTime + '前', // 最新区块时间
         height: toThousands(res.height), // 区块高度
-        messageCount: res['24_h_message_number'] || toThousands(res.messageCount), // 24h消息数
-        total_quality_power: res['Net_effective_computing_power'] || byteConvert(res.total_quality_power) || '2.001 EiB', // 全网有效算力
-        active_miners: res.active_miners || '0', // 活跃矿工数
-        latest_block_reward: ((res.latest_block_reward * 1).toFixed(4) || 18.9812) + ' FIL', // 最新赢票的奖励
-        block_reward: res['Rewards_per_block'] || res.block_reward || '18.9812 FIL', // 每区块奖励
+        messageCount:
+          res['24_h_message_number'] || toThousands(res.messageCount), // 24h消息数
+        total_quality_power:
+          res['Net_effective_computing_power'] ||
+          byteConvert(res.total_quality_power) ||
+          '2.001 EiB', // 全网有效算力
+        active_miners: res.active_minaer || res.active_miners || '0', // 活跃矿工数
+        latest_block_reward:
+          ((res.latest_block_reward * 1).toFixed(4) || 18.9812) + ' FIL', // 最新赢票的奖励
+        block_reward:
+          res['Rewards_per_block'] || res.block_reward || '18.9812 FIL', // 每区块奖励
         total_rewards: toThousands(res.total_rewards, 2) + ' FIL', // 全网出块奖励
-        fil_per_tera: res['24h_average_mining_income'] || (toThousands(res.fil_per_tera, 4) + ' FIL/TiB'), // 24h平均挖矿收益
-        pledge_collateral: res['FIL_pledge_amount'] || ((res.pledge_collateral || 0) + ' FIL'), // FIL质押量
-        total_accounts: toThousands(res['General_ledger_number'] || res.total_accounts), // 总账户数
-        avg_block_time: res['Mean_block_interval'] || (res.avg_block_time || 0 + ' 秒'), // 平均区块间隔
-        avg_blocks_in_tipset_str: res['Average_number_of_blocks_per_height'] || res.avg_blocks_in_tipset_str || 0, // 平均每高度区块数量
-        total_fil: res['FIL_total_supply'] || (toThousands(res.total_fil || 2000000000) + ' FIL'), // FIL总供给量
+        fil_per_tera:
+          res['24h_average_mining_income'] ||
+          toThousands(res.fil_per_tera, 4) + ' FIL/TiB', // 24h平均挖矿收益
+        pledge_collateral:
+          res['FIL_pledge_amount'] || (res.pledge_collateral || 0) + ' FIL', // FIL质押量
+        total_accounts: toThousands(
+          res['General_ledger_number'] || res.total_accounts
+        ), // 总账户数
+        avg_block_time:
+          res['Mean_block_interval'] || res.avg_block_time || 0 + ' 秒', // 平均区块间隔
+        avg_blocks_in_tipset_str:
+          res['Average_number_of_blocks_per_height'] ||
+          res.avg_blocks_in_tipset_str ||
+          0, // 平均每高度区块数量
+        total_fil:
+          res['FIL_total_supply'] ||
+          toThousands(res.total_fil || 2000000000) + ' FIL', // FIL总供给量
         payment_1T: toThousands(res.payment_1T || 0, 4) + ' FIL', // 单T质押量
         preGas_1T: toThousands(res.preGas_1T || 0, 4) + ' FIL', // 单T Gas费
         total_1T: toThousands(res.total_1T || 0, 4) + ' FIL', // 每T扇区的总成本
-        flow_rate: res['Circulating_rate_of_FIL'] || ((res.flow_rate || 0 * 100).toFixed(2) + '%'), // FIL流通率
+        flow_rate:
+          res['Circulating_rate_of_FIL'] ||
+          (res.flow_rate || 0 * 100).toFixed(2) + '%', // FIL流通率
         price: res['The_latest_price'] || `$ ${res.price || 0}`, // 最新价格
         total_blocks: toThousands(res.total_blocks) || '1,840,282', // 全网出块数量
         power_ratio: byteConvert(res.power_ratio) || '706.13' + '/H' // 存储速度
@@ -484,51 +547,85 @@ export default {
         val.duration = duration[val.duration] || '24h'
       }
       const p = { ...val, count: 20, page: 0, pageSize: 20 }
-      this.action(apiObj[val.tab], p, (res) => {
-        switch (val.tab) {
-          case 'power':
-            this.tableData = res.miners
-            this.total = res.totalCount
-            this.tableData.map(item => {
-              if (this.powerBriefData.totalQualityAdjPower && item.qualityAdjPower) {
-                item.percent = (item.qualityAdjPower / this.tableData[0].qualityAdjPower) * 100
-                item.percentText = (item.qualityAdjPower / this.powerBriefData.totalQualityAdjPower) * 100
-                item.ratio = byteConvert(item.qualityAdjPower) + ' / ' + item.percentText.toFixed(2) + '%'
-              } else {
-                item.percent = 0
-                item.ratio = byteConvert(0) + ' / ' + (item.percent / 25).toFixed(2) + '%'
-              }
-              if (item.rawBytePower) {
-                item.efficiency = ((item.totalRewards / Math.pow(10, 18)) / byteConvert(item.rawBytePower, 'TiB')).toFixed(2) + ' FIL/TiB'
-              } else {
-                item.efficiency = '0.00 FIL/TiB'
-              }
-              item.rawBytePowerDelta = byteConvert(item.rawBytePowerDelta)
-              item.location = item.location ? item.location.countryName : 'N/A'
-            })
-            break
-          case 'blocks':
-            this.tableData = res.data.data
-            this.total = res.data.pagination.total
-            this.tableData.map(item => {
-              item.percent = item.blocks_mined / this.tableData[0].blocks_mined * 100
-              item.block_reward = item.block_reward + ' FIL'
-            })
-            break
-          default:
-            this.tableData = res.miners
-            this.total = res.totalCount
-            this.tableData.map(item => {
-              item.growthPercent = (item.qualityAdjPowerGrowth / this.tableData[0].qualityAdjPowerGrowth) * 100
-              item.growth = byteConvert(item.qualityAdjPowerGrowth) + ' / 天'
-              item.equivalentMiners = item.equivalentMiners.toFixed(2)
-              item.rawBytePowerGrowth = byteConvert(item.rawBytePowerGrowth)
-              item.qualityAdjPower = byteConvert(item.qualityAdjPower)
-              item.location = item.location ? item.location.countryName : 'N/A'
-            })
-            break
-        }
-      }, this.loading.power)
+      this.action(
+        apiObj[val.tab],
+        p,
+        res => {
+          switch (val.tab) {
+            case 'power':
+              this.tableData = res.miners
+              this.total = res.totalCount
+              this.tableData.map(item => {
+                if (
+                  this.powerBriefData.totalQualityAdjPower &&
+                  item.qualityAdjPower
+                ) {
+                  item.percent =
+                    (item.qualityAdjPower / this.tableData[0].qualityAdjPower) *
+                    100
+                  item.percentText =
+                    (item.qualityAdjPower /
+                      this.powerBriefData.totalQualityAdjPower) *
+                    100
+                  item.ratio =
+                    byteConvert(item.qualityAdjPower) +
+                    ' / ' +
+                    item.percentText.toFixed(2) +
+                    '%'
+                } else {
+                  item.percent = 0
+                  item.ratio =
+                    byteConvert(0) +
+                    ' / ' +
+                    (item.percent / 25).toFixed(2) +
+                    '%'
+                }
+                if (item.rawBytePower) {
+                  item.efficiency =
+                    (
+                      item.totalRewards /
+                      Math.pow(10, 18) /
+                      byteConvert(item.rawBytePower, 'TiB')
+                    ).toFixed(2) + ' FIL/TiB'
+                } else {
+                  item.efficiency = '0.00 FIL/TiB'
+                }
+                item.rawBytePowerDelta = byteConvert(item.rawBytePowerDelta)
+                item.location = item.location
+                  ? item.location.countryName
+                  : 'N/A'
+              })
+              break
+            case 'blocks':
+              this.tableData = res.data.data
+              this.total = res.data.pagination.total
+              this.tableData.map(item => {
+                item.percent =
+                  (item.blocks_mined / this.tableData[0].blocks_mined) * 100
+                item.block_reward = item.block_reward + ' FIL'
+              })
+              break
+            default:
+              this.tableData = res.miners
+              this.total = res.totalCount
+              this.tableData.map(item => {
+                item.growthPercent =
+                  (item.qualityAdjPowerGrowth /
+                    this.tableData[0].qualityAdjPowerGrowth) *
+                  100
+                item.growth = byteConvert(item.qualityAdjPowerGrowth) + ' / 天'
+                item.equivalentMiners = item.equivalentMiners.toFixed(2)
+                item.rawBytePowerGrowth = byteConvert(item.rawBytePowerGrowth)
+                item.qualityAdjPower = byteConvert(item.qualityAdjPower)
+                item.location = item.location
+                  ? item.location.countryName
+                  : 'N/A'
+              })
+              break
+          }
+        },
+        this.loading.power
+      )
     },
     // 最新区块
     getRecentList() {
@@ -549,14 +646,18 @@ export default {
     // 富豪榜
     getRichList() {
       const p = { pageSize: 10 }
-      this.action(richList, p, res => {
-        this.richListData = res.richList
-        this.richListData.map(item => {
-          item.balancePercent = (item.availableBalance / item.balance).toFixed(2) + '%'
-          item.balance = toThousands(item.balance, 0, 'FIL') + ' FIL'
-        })
-      },
-      this.loading.rich
+      this.action(
+        richList,
+        p,
+        res => {
+          this.richListData = res.richList
+          this.richListData.map(item => {
+            item.balancePercent =
+              (item.availableBalance / item.balance).toFixed(2) + '%'
+            item.balance = toThousands(item.balance, 0, 'FIL') + ' FIL'
+          })
+        },
+        this.loading.rich
       )
     },
     // 挖矿排行-切换地区
@@ -600,9 +701,9 @@ export default {
         )[0]
         this.showBaseRecentData({
           ...this.recentListData[0],
-          ...this.overviewData,
           ...this.getFilData,
-          ...this.calculate_info
+          ...this.calculate_info,
+          ...this.overviewData
         })
       }, 1000)
     }

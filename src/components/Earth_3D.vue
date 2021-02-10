@@ -1,18 +1,15 @@
 <template>
   <!-- 例子6 -->
   <div>
-    <div
-      id="container"
-      style="width: 100%; height: 462rem; box-sizing: border-box;"
-    />
-    <ul ref="tootips" :class="`tootips ${isShow ? 'show' : 'hide'}`">
-      <li v-for="(item, i) in tootips" :key="i">
+    <div id="container"
+         style="width: 100%; height: 462rem; box-sizing: border-box;" />
+    <ul ref="tootips"
+        :class="`tootips ${isShow ? 'show' : 'hide'}`">
+      <li v-for="(item, i) in tootips"
+          :key="i">
         <label>{{ item.label }}:</label>
-        <router-link
-          v-if="['矿工', '节点ID'].includes(item.label)"
-          :to="`/address/${item.val}`"
-        >{{ item.val }}</router-link
-        >
+        <router-link v-if="['矿工', '节点ID'].includes(item.label)"
+                     :to="`/address/${item.val}`">{{ item.val }}</router-link>
         <span v-else>{{ item.val }}</span>
       </li>
     </ul>
@@ -25,6 +22,7 @@ import echarts from 'echarts'
 import 'echarts-gl'
 import { getEarthView, getMap } from '@/utils/api'
 import { subStrCenter } from '@/utils/auth'
+// import { fullImage } from '@/assets/imgs/canvas_bg'
 export default {
   data: () => ({
     isShow: false,
@@ -38,14 +36,15 @@ export default {
     // 3D地球
     drawEarth(myChart, series) {
       var option = {
-        // backgroundColor: '#031321',
+        // backgroundColor: '#ccc',
         globe: {
           baseTexture: myChart,
           top: 'middle',
           left: 'center',
           shading: 'realistic',
           displacementScale: 0.04,
-          environment: require('../assets/imgs/earth_bg.png'),
+          // environment: fullImage(myChart),
+          environment: require('../assets/imgs/starfield.png'),
           // shading: 'color',
           realisticMaterial: {
             // roughness: 0.9
@@ -76,20 +75,20 @@ export default {
       // 画图
       const myChartView = echarts.init(document.getElementById('container'))
       myChartView.setOption(option, true)
-      window.addEventListener('resize', function() {
+      window.addEventListener('resize', function () {
         myChartView.resize()
       })
       var that = this
       var tootips = that.$refs.tootips
       if (!that.isShow) {
-        document.onmouseover = function(event) {
+        document.onmouseover = function (event) {
           var ev = ev || event
           if (tootips) {
             tootips.style.top = event.offsetY + 'rem'
             tootips.style.left = event.offsetX + 'rem'
           }
           // console.log(event, tootips.style.top, tootips.style.left)
-          myChart.on('mouseover', function(params) {
+          myChart.on('mouseover', function (params) {
             if (params.value) {
               that.tootips = [
                 { label: '节点ID', val: params.value[2] },
@@ -102,7 +101,7 @@ export default {
           })
         }
       }
-      myChart.on('click', function(params) {
+      myChart.on('click', function (params) {
         if (params.value) {
           that.$router.push({
             path: `/address/${params.value[3]}`
@@ -202,7 +201,7 @@ export default {
           randomArr.push(parseInt(Math.random() * num))
         }
 
-        const createData = function(datas, n) {
+        const createData = function (datas, n) {
           for (let i = 0; i < n; i++) {
             datas.map(item => {
               item.name.push([
@@ -294,7 +293,7 @@ export default {
         ]
       }
 
-      var convertData = function(data) {
+      var convertData = function (data) {
         // console.log(data)
         var res = []
         for (var i = 0; i < data.length; i++) {
@@ -311,7 +310,7 @@ export default {
 
       var series = [] // 3D飞线
       var dser = [] // 2D散点坐标
-      Data_Map.forEach(function(item, i) {
+      Data_Map.forEach(function (item, i) {
         dser.push(
           {
             type: 'effectScatter',
@@ -332,7 +331,7 @@ export default {
                 color: '#f5f802'
               }
             },
-            data: item[1].map(function(dataItem) {
+            data: item[1].map(function (dataItem) {
               return {
                 name: dataItem[1].name,
                 value: geoCoordMap[dataItem[1].name],
@@ -426,7 +425,6 @@ export default {
 </script>
 <style lang="less" scoped>
 #container {
-  background: url('../assets/imgs/earth_bg.png') no-repeat;
   background-position: left;
 }
 
@@ -435,7 +433,8 @@ export default {
   border-style: solid;
   white-space: nowrap;
   z-index: 9999999;
-  transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+  transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s,
+    top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
   background-color: rgba(0, 0, 0, 0.6);
   border-width: 0;
   border-color: rgb(51, 51, 51);

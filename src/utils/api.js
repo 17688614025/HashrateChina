@@ -141,6 +141,26 @@ export const addressBalanceStats = p => get(`address/${p.id}/balance-stats`, p)
 // 矿工的算力变化
 export const addressPowerStats = p => get(`address/${p.id}/power-stats`)
 
+// 计算器-满村算力
+/**
+ *
+ * @param {cost: "23"
+increase_power_per_day: "15.74"
+init_power: "123"
+total_power: "123"} p
+ */
+
+/**
+  * 矿机封装产出
+  * @param {cost: "23"
+current_date: "2021-02-05"
+increase_power_per_day: "15.74"
+init_power: 0
+power_per_day: 2
+total_power: "12"} p
+  */
+export const get_calculate_sum_v2 = p => get(`https://explorer.atpool.com/api/calculator/get_calculate_sum_v2`, p)
+
 /**
  * Body参数 (application/json)
  * @param {id}: 1
